@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>登录</title>
+    <script src="scripts/jquery.js"></script>
+    <script src="scripts/jquery.cookie.js"></script>
+    <link rel="stylesheet" href="css/login.css">
+</head>
+<body>
+    <div class="container">
+        <div class="group">
+            <label for="account">账号：</label>
+            <input type="text" id="account" placeholder="账号">
+        </div>
+        <div class="group">
+            <label for="password">密码：</label>
+            <input type="password" id="password" placeholder="密码">
+        </div>
+
+        <div class="group">
+            <input type="checkbox" id="remember" >
+            <label for="remember">记住账号？</label>
+            <span>您还没有账号？
+                <a href="/register.html">去注册</a>
+            </span>
+        </div>
+
+        <div class="group">
+            <button id="btnLogin">登录</button>
+        </div>
+        
+    </div>
+    <script>
+        $(function(){
+            
+            $('#btnLogin').on('click',function(){
+                
+                var loginName = $.trim($('#account').val());
+                var password = $.trim($('#password').val());
+                if(!loginName|| !password){
+                    alert("账号和密码不能为空！");
+                    return;
+                }
+                // 从接口中获取数据
+                // 参数1：接口地址，参数2：向服务器传递的数据，参数3：服务器响应成功时的回调函数
+                $.post('/api/login',{loginName,password},function(data){
+                    if(data.code!=200){
+                        alert(data.message);
+                        return;
+                    }                  // prop是从属性对象中取值                              
+                    var remember = $('#remember').prop('checked');
+                    if(remember){
+                        $.cookie("remember",true,{ path: '/' });
+                    }
+                    // 创建一个仅对 path 路径页面有效的 cookie ，cookie 的有效期为 1 天
+                    $.cookie("loginName",loginName,{expires: 1, path: '/'});
+
+                    //第二种写法-----------------------------
+                    /* var rememberFlag = $.cookie('remember');
+                    if (rememberFlag) {
+                        $('#remember').prop("checked", true);
+                        $('#account').val($.cookie('loginName'));
+                    }  */
+
+                    location.href =" /index.html"
+                })
+            })
+        })
+    </script>
+</body>
+</html>

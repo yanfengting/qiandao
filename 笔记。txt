@@ -1,0 +1,30 @@
+1.先node init导入package.json
+2.index.js
+    const express = require('express');
+    const path = require('path');
+    const app = express();
+    app.use(express.static(path.join(__dirname, "public")))
+    app.listen(8000,function(){
+        console.log("server is running ，please printf http://localhost:8000");
+    })
+3.新建文件夹public/css,scripts,3个html
+4.控制台运行node index  网页输入localhost:3000  路打通了
+5. 网页输入http://localhost:8000/login.html 
+    在login.html设计页面body
+6. scripts
+    登录设置点击监听 $('#btnLogin').on('click', function () {}
+    声明变量获取 登录和密码的id--账号密码不能空
+    从接口中获取数据 ($.post)
+        创建路由router/user/index.js  (route.post)
+        const express = require("express");
+        const route = express.Router();
+        route.post('/api/login',function(req,res,next){
+            // 
+        })
+        module.exports = route;
+        然后var users=[]并判断密码正确吗
+        判断是否记住账号
+7.写index.html
+
+    
+    

@@ -1,0 +1,19 @@
+{
+  "name": "qiandao-web",
+  "version": "1.0.0",
+  "description": "使用express配合ajax实现签到小功能。",
+  "main": "index.js",
+  "dependencies": {
+    "express": "^4.16.3"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "express",
+    "ajax"
+  ],
+  "author": "yft",
+  "license": "ISC"
+}

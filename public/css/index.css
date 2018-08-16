@@ -1,0 +1,39 @@
+*{
+    margin:0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body{
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 14px;
+}
+.container{
+    width: 980px;
+    margin: 10px auto 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    position: relative;
+}
+
+.container h2{
+    font-size: 18px;
+    font-weight: 500;
+}
+button {
+    padding: 3px 10px;
+    margin: 10px 0;
+}
+.input{
+    width: 100px;
+    display: none;
+}
+.input span{
+    color: red;
+}
+#btnLogout{
+    position: absolute;
+    right:10px;
+    top: 10px;
+}

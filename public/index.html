@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>签到主页</title>
+    <link rel="stylesheet" href="css/index.css">
+    <script src="scripts/jquery.js"></script>
+    <script src="scripts/jquery.cookie.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h2>当前用户：
+           <span id="currentUser"></span>
+           <button id="btnLogout">退出</button>     
+        </h2>
+        <button id="btnQD">签到</button>
+        <div class="input">
+            <label for="jd">经度：</label>
+            <input id="jd" type="number">
+            <label for="wd">纬度：</label>
+            <input id="wd" type="number">
+            <button id="btnQDReal">签到</button>
+        </div>
+    </div>
+    <script>
+        $(function(){
+            // 登录判断，如果没登录，跳转到登录页。
+            // cookie是保留到客户端的一段数据，数据不安全，不建议保存账号，密码，银行卡等相对安全性要求比较高的数据，保存其他数据是建议加密。保存的数据大小有限制，大概是4kb
+            // jQuery.cookie.js
+            var loginName = $.cookie('loginName');
+            if(!loginName){
+                location.href = '/login.html';
+                return;
+            }
+            
+            $('#currentUser').text(loginName);
+
+            $('#btnQD').click(function(){
+                $(this).hide(1000);
+                $('.input').show(1000);
+            })
+
+            $('#btnQDReal').click(function(){
+                // 客户端的简单判断
+                var jd = $.trim($('#jd').val());
+                var wd = $.trim($('#wd').val());
+                if(!jd || !wd){
+                    alert("别懒了，快快输入吧！");
+                    return;
+                }
+            
+            $.post('/api/qd',{jd,wd},function(data){
+                console.log(data);
+                if(data.code !=200 ){
+                    // 签到不成功弹框
+                    // $('.input').html(`<span>${data.message}</span>`)
+                    alert(data.message);                    
+                    return;
+                }
+                $('.input').html(`<span>${data.message}</span>`)
+            })
+            
+        });
+
+        $('#btnLogout').click(function(){
+            $.cookie('loginName','');
+            location.href = '/login.html'
+        });
+    })
+    </script>
+</body>
+</html>
